@@ -1,0 +1,3 @@
+[submodule "simulator/IP/mycpu"]
+	path = simulator/IP/mycpu
+	url = git@github.com:USTC-System-Courses/CECS-pipeline-BRAM.git
