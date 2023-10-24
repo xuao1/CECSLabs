@@ -55,6 +55,17 @@ module CPU#(
     logic [31:0]    csr_wdata_ls;
     logic [31:0]    csr_wdata_wb;
 
+    // ecall 信号
+    logic [ 0:0]    ecall_signal_id;
+    logic [ 0:0]    ecall_signal_ex;
+    logic [ 0:0]    ecall_signal_ls;
+    logic [ 0:0]    ecall_signal_wb;
+
+    // 中断、异常信号
+    logic [ 0:0]    interrupt_en;
+    logic [ 0:0]    exception_en;
+    logic [ 3:0]    exception_num;
+
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
     assign commit_if1 = rstn;
@@ -126,7 +137,8 @@ module CPU#(
         .alu_rs1_sel    (alu_rs1_sel_id),
         .alu_rs2_sel    (alu_rs2_sel_id),
         .wb_rf_sel      (wb_rf_sel_id),
-        .br_type        (br_type_id)
+        .br_type        (br_type_id),
+        .ecall_signal   (ecall_signal_id)
     );
     Regfile  Regfile_inst (
         .clk            (clk),
@@ -174,7 +186,9 @@ module CPU#(
         .commit_id      (commit_id),
         .commit_ex      (commit_ex),
         .csr_rdata_id   (csr_rdata_id),
-        .csr_rdata_ex   (csr_rdata_ex)
+        .csr_rdata_ex   (csr_rdata_ex),
+        .ecall_signal_id (ecall_signal_id),
+        .ecall_signal_ex (ecall_signal_ex)
     );
 
     /* EX stage */
@@ -275,7 +289,9 @@ module CPU#(
         .commit_ex      (commit_ex),
         .commit_ls      (commit_ls),
         .csr_wdata_ex   (csr_wdata_ex),
-        .csr_wdata_ls   (csr_wdata_ls)
+        .csr_wdata_ls   (csr_wdata_ls),
+        .ecall_signal_ex (ecall_signal_ex),
+        .ecall_signal_ls (ecall_signal_ls)
     );
 
     DCache # (
@@ -324,7 +340,9 @@ module CPU#(
         .read_ls            (mem_access_ls[`LOAD_BIT]),
         .uncache_read_wb    (uncache_read_wb),
         .csr_wdata_ls       (csr_wdata_ls),
-        .csr_wdata_wb       (csr_wdata_wb)
+        .csr_wdata_wb       (csr_wdata_wb),
+        .ecall_signal_ls    (ecall_signal_ls),
+        .ecall_signal_wb    (ecall_signal_wb)
     );
 
     /* WB stage */
@@ -377,6 +395,15 @@ module CPU#(
         .csr_instr_ex       (inst_ex[6:0]==7'h73),
         .pc_ex              (pc_ex)
     ); 
+
+    /* Exp Commit */
+    Exp_Commit Exp_Commit_inst (
+        .ecall_signal       (ecall_signal_wb),
+        .interrupt_en       (interrupt_en),
+        .exception_en       (exception_en),
+        .exception_num      (exception_num)
+    )
+
 `ifdef DEBUG
     assign putchar = |wstrb_ex && (&alu_result_ex);
     assign c = mem_wdata_ex[31 : 24];

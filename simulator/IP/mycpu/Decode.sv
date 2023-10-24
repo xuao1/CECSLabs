@@ -8,7 +8,8 @@ module Decode(
     output logic [ 1:0] alu_rs1_sel,
     output logic [ 1:0] alu_rs2_sel,
     output logic [ 0:0] wb_rf_sel,
-    output logic [ 4:0] br_type
+    output logic [ 4:0] br_type,
+    output logic [ 0:0] ecall_signal
 );
     // normal decode 
     wire [4:0] rd = inst[11:7];
@@ -123,7 +124,6 @@ module Decode(
         'h73: begin
             // CSR instruction
             // Lab4 TODO: finish CSR instruction decode
-
             imm         = {27'b0 ,inst[19:15]};
             mem_access  = `NO_ACCESS;
             alu_op      = `ADD;
@@ -146,5 +146,6 @@ module Decode(
         endcase
     end
     // Lab4 TODO: you may need to decode for ecall and mret specially here
+    assign ecall_signal = (inst == 32'h73);
 
 endmodule

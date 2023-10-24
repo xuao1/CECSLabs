@@ -18,6 +18,9 @@ module SegReg_LS_WB#(
     input  logic [31:0] csr_wdata_ls,
     output logic [31:0] csr_wdata_wb,
 
+    input  logic [ 0:0] ecall_signal_ls,
+    output logic [ 0:0] ecall_signal_wb,
+
     output logic [31:0] pc_wb,
     output logic [31:0] inst_wb,
     output logic [31:0] alu_result_wb,
@@ -38,6 +41,7 @@ module SegReg_LS_WB#(
             commit_wb       <= 1'h0;
             uncache_read_wb <= 1'h0;
             csr_wdata_wb    <= 32'h0;
+            ecall_signal_wb <= 1'h0;
         end 
         else if(!stall) begin
             pc_wb           <= pc_ls;
@@ -49,6 +53,7 @@ module SegReg_LS_WB#(
             commit_wb       <= commit_ls;
             uncache_read_wb <= read_ls && alu_result_ls[31:28] == 4'ha;
             csr_wdata_wb    <= csr_wdata_ls;
+            ecall_signal_wb <= ecall_signal_ls;
         end
     end
 
