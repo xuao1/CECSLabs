@@ -77,7 +77,7 @@ module CSR(
         end
         // Lab4 TODO: implement mepc
         else if(exception_en) begin
-            mepc <= pc_wb;
+            mepc <= pc_wb + 32'h4;
         end
         else if(we && (waddr == `CSR_MEPC)) begin
             mepc <= wdata;

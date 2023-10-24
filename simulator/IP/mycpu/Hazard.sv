@@ -119,7 +119,7 @@ module Hazard(
             pc_set_target = mtvec_global;
         end
         else if (flush_by_mret) begin
-            pc_set_target = mepc_global + 32'h4;
+            pc_set_target = mepc_global;
         end
         else if (flush_by_jump) begin
             pc_set_target = jump_target;
