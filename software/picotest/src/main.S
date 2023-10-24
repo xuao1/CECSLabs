@@ -55,12 +55,13 @@ main:
 #    TEST(sw)
 #    TEST(xor)
 #    TEST(xori)
-    TEST(csrrw)
-    TEST(csrrs)
-    TEST(csrrc)
-    TEST(csrrwi)
-    TEST(csrrsi)
-    TEST(csrrci)
+#    TEST(csrrw)
+#    TEST(csrrs)
+#    TEST(csrrc)
+#    TEST(csrrwi)
+#    TEST(csrrsi)
+#    TEST(csrrci)
+	TEST(ecall)
 
 .global end_loop
 end_loop:
