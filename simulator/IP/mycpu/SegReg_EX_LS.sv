@@ -14,6 +14,9 @@ module SegReg_EX_LS#(
     input  logic [ 0:0] rf_we_ex,
     input  logic [ 0:0] commit_ex,
 
+    input  logic [31:0] csr_wdata_ex,
+    output logic [31:0] csr_wdata_ls,
+
     output logic [31:0] pc_ls,
     output logic [31:0] inst_ls,
     output logic [31:0] alu_result_ls,
@@ -31,6 +34,7 @@ module SegReg_EX_LS#(
             wb_rf_sel_ls    <=  1'h0;
             rf_we_ls        <=  1'h0;
             commit_ls       <=  1'h0;
+            csr_wdata_ls    <= 32'h0;
         end 
         else if(!stall) begin
             pc_ls           <= pc_ex;
@@ -40,6 +44,7 @@ module SegReg_EX_LS#(
             wb_rf_sel_ls    <= wb_rf_sel_ex;
             rf_we_ls        <= rf_we_ex;
             commit_ls       <= commit_ex;
+            csr_wdata_ls    <= csr_wdata_ex;
         end
     end
 endmodule

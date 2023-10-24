@@ -6,7 +6,6 @@ module CSR(
     input  logic [11:0] waddr,
     input  logic [ 0:0] we,
     input  logic [31:0] wdata,
-    input  logic [31:0] pc_ex,
     output logic [31:0] rdata
     // Lab4 TODO: you need to add some input or output pors to implement CSRs' special functions
 );
@@ -19,7 +18,7 @@ module CSR(
         end
         // Lab4 TODO: implement mstatus
         else if(we && (waddr == `CSR_MSTATUS)) begin
-            mstatus <= pc_ex;
+            mstatus <= wdata;
         end
     end
 

@@ -52,6 +52,8 @@ module CPU#(
     logic [31:0]    csr_rdata_ex;
     // 要写入csr的数据
     logic [31:0]    csr_wdata_ex;
+    logic [31:0]    csr_wdata_ls;
+    logic [31:0]    csr_wdata_wb;
 
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
@@ -230,6 +232,7 @@ module CPU#(
         .jump_target    (jump_target)
     );
 
+    // 在 EX 段计算出要写入 CSR 的数据
     Priv Priv_inst (
         .csr_op         (inst_ex[14:12]),
         .csr_rdata      (csr_rdata_ex), // 要从csr读取的数据
@@ -238,15 +241,14 @@ module CPU#(
         .csr_wdata      (csr_wdata_ex) // 要写入csr的数据
     );
 
-    // 读操作在 ID 段，写操作在 EX 段
+    // 读操作在 ID 段，写操作在 WB 段
     CSR CSR_inst (
         .clk            (clk),
         .rstn           (rstn),
         .raddr          (inst_id[31:20]),
-        .waddr          (inst_ex[31:20]),
-        .pc_ex          (pc_ex),
-        .we             ((inst_ex[6:0]==7'h73 ? 1'b1 : 1'b0)),
-        .wdata          (csr_wdata_ex), // 要写入csr的数据
+        .waddr          (inst_wb[31:20]),
+        .we             ((inst_wb[6:0]==7'h73 ? 1'b1 : 1'b0)),
+        .wdata          (csr_wdata_wb), // 要写入csr的数据
         .rdata          (csr_rdata_id) // 要从csr读取的数据
     );
 
@@ -271,7 +273,9 @@ module CPU#(
         .wb_rf_sel_ls   (wb_rf_sel_ls),
         .rf_we_ls       (rf_we_ls),
         .commit_ex      (commit_ex),
-        .commit_ls      (commit_ls)
+        .commit_ls      (commit_ls),
+        .csr_wdata_ex   (csr_wdata_ex),
+        .csr_wdata_ls   (csr_wdata_ls)
     );
 
     DCache # (
@@ -318,7 +322,9 @@ module CPU#(
         .commit_ls          (commit_ls),
         .commit_wb          (commit_wb),
         .read_ls            (mem_access_ls[`LOAD_BIT]),
-        .uncache_read_wb    (uncache_read_wb)
+        .uncache_read_wb    (uncache_read_wb),
+        .csr_wdata_ls       (csr_wdata_ls),
+        .csr_wdata_wb       (csr_wdata_wb)
     );
 
     /* WB stage */
