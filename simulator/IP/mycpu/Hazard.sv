@@ -48,7 +48,11 @@ module Hazard(
     output logic [31:0] pc_set_target,
 
     input  logic [ 0:0] ecall_signal_ex,
-    input  logic [ 0:0] exception_en
+    input  logic [ 0:0] exception_en,
+
+    input  logic [ 0:0] mret_signal_ex,
+
+    input  logic [31:0] mepc_global
 );
     // forwarding
     always_comb begin
@@ -90,12 +94,13 @@ module Hazard(
     wire flush_by_csr = csr_instr_ex;
     wire flush_by_ecall = ecall_signal_ex;
     wire flush_by_exception = exception_en;
+    wire flush_by_mret = mret_signal_ex;
 
     // Lab3 TODO: generate pc_set, IF1_IF2_flush, IF2_ID_flush, ID_EX_flush, EX_LS_flush, LS_WB_flush
-    assign pc_set           = flush_by_jump | flush_by_csr | flush_by_exception;
-    assign IF1_IF2_flush    = flush_by_jump | flush_by_csr | flush_by_ecall | flush_by_exception;
-    assign IF2_ID_flush     = flush_by_jump | flush_by_csr | flush_by_ecall | flush_by_exception;
-    assign ID_EX_flush      = flush_by_jump | flush_by_load_use | flush_by_csr | flush_by_ecall | flush_by_exception;
+    assign pc_set           = flush_by_jump | flush_by_csr | flush_by_exception | flush_by_mret;
+    assign IF1_IF2_flush    = flush_by_jump | flush_by_csr | flush_by_ecall | flush_by_exception | flush_by_mret;
+    assign IF2_ID_flush     = flush_by_jump | flush_by_csr | flush_by_ecall | flush_by_exception | flush_by_mret;
+    assign ID_EX_flush      = flush_by_jump | flush_by_load_use | flush_by_csr | flush_by_ecall | flush_by_exception | flush_by_mret;
     assign EX_LS_flush      = flush_by_exception;
     assign LS_WB_flush      = flush_by_exception;
 
@@ -112,6 +117,9 @@ module Hazard(
         pc_set_target = jump_target;
         if (flush_by_exception) begin
             pc_set_target = mtvec_global;
+        end
+        else if (flush_by_mret) begin
+            pc_set_target = mepc_global + 32'h4;
         end
         else if (flush_by_jump) begin
             pc_set_target = jump_target;

@@ -9,7 +9,8 @@ module Decode(
     output logic [ 1:0] alu_rs2_sel,
     output logic [ 0:0] wb_rf_sel,
     output logic [ 4:0] br_type,
-    output logic [ 0:0] ecall_signal
+    output logic [ 0:0] ecall_signal,
+    output logic [ 0:0] mret_signal_id
 );
     // normal decode 
     wire [4:0] rd = inst[11:7];
@@ -147,5 +148,6 @@ module Decode(
     end
     // Lab4 TODO: you may need to decode for ecall and mret specially here
     assign ecall_signal = (inst == 32'h73);
+    assign mret_signal_id = (inst == 32'h30200073);
 
 endmodule

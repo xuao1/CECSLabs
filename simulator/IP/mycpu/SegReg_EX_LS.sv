@@ -20,6 +20,9 @@ module SegReg_EX_LS#(
     input  logic [ 0:0] ecall_signal_ex,
     output logic [ 0:0] ecall_signal_ls,
 
+    input  logic [ 0:0] mret_signal_ex,
+    output logic [ 0:0] mret_signal_ls,
+
     output logic [31:0] pc_ls,
     output logic [31:0] inst_ls,
     output logic [31:0] alu_result_ls,
@@ -39,6 +42,7 @@ module SegReg_EX_LS#(
             commit_ls       <=  1'h0;
             csr_wdata_ls    <= 32'h0;
             ecall_signal_ls <=  1'h0;
+            mret_signal_ls  <=  1'h0;
         end 
         else if(!stall) begin
             pc_ls           <= pc_ex;
@@ -50,6 +54,7 @@ module SegReg_EX_LS#(
             commit_ls       <= commit_ex;
             csr_wdata_ls    <= csr_wdata_ex;
             ecall_signal_ls <= ecall_signal_ex;
+            mret_signal_ls  <= mret_signal_ex;
         end
     end
 endmodule

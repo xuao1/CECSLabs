@@ -72,6 +72,12 @@ module CPU#(
     // mepc
     logic [31:0]    mepc_global;
 
+    // mret 信号
+    logic [ 0:0]    mret_signal_id;
+    logic [ 0:0]    mret_signal_ex;
+    logic [ 0:0]    mret_signal_ls;
+    logic [ 0:0]    mret_signal_wb;
+
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
     assign commit_if1 = rstn;
@@ -144,7 +150,8 @@ module CPU#(
         .alu_rs2_sel    (alu_rs2_sel_id),
         .wb_rf_sel      (wb_rf_sel_id),
         .br_type        (br_type_id),
-        .ecall_signal   (ecall_signal_id)
+        .ecall_signal   (ecall_signal_id),
+        .mret_signal_id (mret_signal_id)
     );
     Regfile  Regfile_inst (
         .clk            (clk),
@@ -275,7 +282,8 @@ module CPU#(
         .exception_num  (exception_num),
         .mtvec_global   (mtvec_global),
         .pc_wb          (pc_wb),
-        .mepc_global    (mepc_global)
+        .mepc_global    (mepc_global),
+        .mret_signal_wb (mret_signal_wb)
     );
 
     /* EX-LS segreg */
@@ -303,7 +311,9 @@ module CPU#(
         .csr_wdata_ex   (csr_wdata_ex),
         .csr_wdata_ls   (csr_wdata_ls),
         .ecall_signal_ex (ecall_signal_ex),
-        .ecall_signal_ls (ecall_signal_ls)
+        .ecall_signal_ls (ecall_signal_ls),
+        .mret_signal_ex (mret_signal_ex),
+        .mret_signal_ls (mret_signal_ls)
     );
 
     DCache # (
@@ -354,7 +364,9 @@ module CPU#(
         .csr_wdata_ls       (csr_wdata_ls),
         .csr_wdata_wb       (csr_wdata_wb),
         .ecall_signal_ls    (ecall_signal_ls),
-        .ecall_signal_wb    (ecall_signal_wb)
+        .ecall_signal_wb    (ecall_signal_wb),
+        .mret_signal_ls     (mret_signal_ls),
+        .mret_signal_wb     (mret_signal_wb)
     );
 
     /* WB stage */
@@ -410,7 +422,10 @@ module CPU#(
         .ecall_signal_ex    (ecall_signal_ex),
         .exception_en       (exception_en),
 
-        .mtvec_global       (mtvec_global)
+        .mtvec_global       (mtvec_global),
+
+        .mret_signal_ex     (mret_signal_ex),
+        .mepc_global        (mepc_global)
     ); 
 
     /* Exp Commit */

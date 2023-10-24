@@ -26,6 +26,9 @@ module SegReg_ID_EX#(
     input  logic [ 0:0] ecall_signal_id,
     output logic [ 0:0] ecall_signal_ex, 
 
+    input  logic [ 0:0] mret_signal_id,
+    output logic [ 0:0] mret_signal_ex,
+
     output logic [31:0] pc_ex,
     output logic [31:0] inst_ex,
     output logic [31:0] rdata1_ex,
@@ -57,6 +60,7 @@ module SegReg_ID_EX#(
             commit_ex       <=  1'h0;
             csr_rdata_ex    <= 32'h0;
             ecall_signal_ex <=  1'h0;
+            mret_signal_ex  <=  1'h0;
         end 
         else if(!stall) begin
             pc_ex           <= pc_id;
@@ -74,6 +78,7 @@ module SegReg_ID_EX#(
             commit_ex       <= commit_id;
             csr_rdata_ex    <= csr_rdata_id;
             ecall_signal_ex <= ecall_signal_id;
+            mret_signal_ex  <= mret_signal_id;
         end
     end
 
