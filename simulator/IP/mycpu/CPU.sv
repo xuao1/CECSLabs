@@ -66,6 +66,9 @@ module CPU#(
     logic [ 0:0]    exception_en;
     logic [ 3:0]    exception_num;
 
+    // mtvec
+    logic [31:0]    mtvec_global;
+
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
     assign commit_if1 = rstn;
@@ -263,7 +266,9 @@ module CPU#(
         .waddr          (inst_wb[31:20]),
         .we             ((inst_wb[6:0]==7'h73 ? 1'b1 : 1'b0)),
         .wdata          (csr_wdata_wb), // 要写入csr的数据
-        .rdata          (csr_rdata_id) // 要从csr读取的数据
+        .rdata          (csr_rdata_id), // 要从csr读取的数据
+        .exception_en   (exception_en),
+        .mtvec_global   (mtvec_global)
     );
 
     /* EX-LS segreg */
@@ -393,7 +398,12 @@ module CPU#(
         .pc_set_target      (pc_target),
 
         .csr_instr_ex       (inst_ex[6:0]==7'h73),
-        .pc_ex              (pc_ex)
+        .pc_ex              (pc_ex),
+
+        .ecall_signal_ex    (ecall_signal_ex),
+        .exception_en       (exception_en),
+
+        .mtvec_global       (mtvec_global)
     ); 
 
     /* Exp Commit */
