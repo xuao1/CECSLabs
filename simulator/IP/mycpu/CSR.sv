@@ -18,7 +18,7 @@ module CSR(
         end
         // Lab4 TODO: implement mstatus
         else if(we && (waddr == `CSR_MSTATUS)) begin
-            mstatus <= 32'h1;
+            mstatus <= wdata;
         end
     end
 
