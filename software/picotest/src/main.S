@@ -61,7 +61,8 @@ main:
 #    TEST(csrrwi)
 #    TEST(csrrsi)
 #    TEST(csrrci)
-	TEST(ecall)
+# 	 TEST(ecall)
+	TEST(mret)
 
 .global end_loop
 end_loop:
