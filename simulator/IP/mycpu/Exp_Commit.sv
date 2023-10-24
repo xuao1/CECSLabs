@@ -13,5 +13,5 @@ module Exp_Commit(
     // you need to generate exception code for `syscall from machine mode`
     assign interrupt_en = 1'b0;
     assign exception_en = ecall_signal;
-    assign exception_num = 4'h8;
+    assign exception_num = 4'hb;
 endmodule
