@@ -210,7 +210,7 @@ module CPU#(
         .din1           (alu_rf_data2),
         .din2           (imm_ex),
         .din3           (32'h4),
-        .din4           (csr_rdata_id),
+        .din4           (csr_rdata_ex),
         .sel            (alu_rs2_sel_ex),
         .dout           (alu_rs2)
     );
