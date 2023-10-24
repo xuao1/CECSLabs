@@ -18,7 +18,9 @@ module CSR(
         end
         // Lab4 TODO: implement mstatus
         else if(we && (waddr == `CSR_MSTATUS)) begin
-            mstatus <= wdata;
+            // mstatus <= wdata;
+            // 第30-22位必须是零
+            mstatus <= {wdata[31:31], 9'b0, wdata[21:0]};
         end
     end
 
@@ -29,7 +31,9 @@ module CSR(
         end
         // Lab4 TODO: implement mtvec
         else if(we && (waddr == `CSR_MTVEC)) begin
-            mtvec <= wdata;
+            // mtvec <= wdata;
+            // 最后两位必须是零
+            mtvec <= {wdata[31:2], 2'b0};
         end
     end
 
@@ -40,7 +44,9 @@ module CSR(
         end
         // Lab4 TODO: implement mcause
         else if(we && (waddr == `CSR_MCAUSE)) begin
-            mcause <= wdata;
+           // mcause <= wdata;
+           // 30-4位必须是零
+            mcause <= {wdata[31:31], 27'b0, wdata[3:0]};
         end
     end
 
