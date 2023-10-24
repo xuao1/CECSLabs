@@ -47,6 +47,12 @@ module CPU#(
 
     logic [ 0:0]    commit_if1, commit_if2, commit_id, commit_ex, commit_ls;
 
+    // 要从csr读取的数据
+    logic [31:0]    csr_rdata_id;
+    logic [31:0]    csr_rdata_ex;
+    // 要写入csr的数据
+    logic [31:0]    csr_wdata_ex;
+
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
     assign commit_if1 = rstn;
@@ -165,7 +171,8 @@ module CPU#(
         .rf_we_ex       (rf_we_ex),
         .commit_id      (commit_id),
         .commit_ex      (commit_ex)
-
+        .csr_rdata_id   (csr_rdata_id),
+        .csr_rdata_ex   (csr_rdata_ex)
     );
 
     /* EX stage */
@@ -221,6 +228,25 @@ module CPU#(
         .imm            (imm_ex),
         .jump           (jump),
         .jump_target    (jump_target)
+    );
+
+    Priv Priv_inst (
+        .csr_op         (inst_ex[14:12]),
+        .csr_rdate      (csr_rdata_ex), // 要从csr读取的数据
+        .rf_rdate1      (rf_rdata1_ex),
+        .zimm           (imm_ex),
+        .csr_wdata      (csr_wdata_ex) // 要写入csr的数据
+    );
+
+    // 读操作在 ID 段，写操作在 EX 段
+    CSR CSR_inst (
+        .clk            (clk),
+        .rstn           (rstn),
+        .raddr          (inst_id[31:20]),
+        .waddr          (inst_ex[31:20]),
+        .we             ((inst_ex[6:0]==7'h73)),
+        .wdata          (csr_wdata_ex) // 要写入csr的数据
+        .rdata          (csr_rdata_id) // 要从csr读取的数据
     );
 
     /* EX-LS segreg */
@@ -339,7 +365,10 @@ module CPU#(
         .ID_EX_stall        (ID_EX_stall),
         .EX_LS_stall        (EX_LS_stall),
         .LS_WB_stall        (LS_WB_stall),
-        .pc_set_target      (pc_target)
+        .pc_set_target      (pc_target),
+
+        .csr_instr_ex       (inst_ex[31:20]==7'h73),
+        .pc_ex              (pc_ex)
     ); 
 `ifdef DEBUG
     assign putchar = |wstrb_ex && (&alu_result_ex);

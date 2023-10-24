@@ -20,6 +20,9 @@ module SegReg_ID_EX#(
     input  logic [ 0:0] rf_we_id,
     input  logic [ 0:0] commit_id,
 
+    input  logic [31:0] csr_rdata_id,        
+    output logic [31:0] csr_rdata_ex,
+
     output logic [31:0] pc_ex,
     output logic [31:0] inst_ex,
     output logic [31:0] rdata1_ex,
@@ -49,6 +52,7 @@ module SegReg_ID_EX#(
             alu_rs2_sel_ex  <=  2'h0;
             rf_we_ex        <=  1'h0;
             commit_ex       <=  1'h0;
+            csr_rdata_ex    <= 32'h0;
         end 
         else if(!stall) begin
             pc_ex           <= pc_id;
@@ -64,6 +68,7 @@ module SegReg_ID_EX#(
             alu_rs2_sel_ex  <= alu_rs2_sel_id;
             rf_we_ex        <= rf_we_id;
             commit_ex       <= commit_id;
+            csr_rdata_ex    <= csr_rdata_id;
         end
     end
 

@@ -95,6 +95,27 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   const char *csr_names[] = {"mepc", "mstatus", "mcause", "mtvec"};
   // check csr
   // Lab4 TODO: (In Lab3, you can ignore this part.)implement the csr check function, return false if any difference, and output some infomation of the difference
+  if (ref_r->csr.mepc != sim_cpu.csr.mepc) {
+    printf("mepc is different before executing instruction at pc = " FMT_WORD ", mepc right = " FMT_WORD ", wrong = " FMT_WORD "\n",
+      pc, ref_r->csr.mepc, sim_cpu.csr.mepc); 
+    return false;
+  }
+  if (ref_r->csr.mstatus != sim_cpu.csr.mstatus) {
+    printf("mstatus is different before executing instruction at pc = " FMT_WORD ", mstatus right = " FMT_WORD ", wrong = " FMT_WORD "\n",
+      pc, ref_r->csr.mstatus, sim_cpu.csr.mstatus); 
+    return false;
+  }
+  if (ref_r->csr.mcause != sim_cpu.csr.mcause) {
+    printf("mcause is different before executing instruction at pc = " FMT_WORD ", mcause right = " FMT_WORD ", wrong = " FMT_WORD "\n",
+      pc, ref_r->csr.mcause, sim_cpu.csr.mcause); 
+    return false;
+  }
+  if (ref_r->csr.mtvec != sim_cpu.csr.mtvec) {
+    printf("mtvec is different before executing instruction at pc = " FMT_WORD ", mtvec right = " FMT_WORD ", wrong = " FMT_WORD "\n",
+      pc, ref_r->csr.mtvec, sim_cpu.csr.mtvec); 
+    return false;
+  }
+
   return true;
 }
 
