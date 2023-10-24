@@ -22,5 +22,6 @@ module Priv(
             CSRRSI: csr_wdata = csr_rdata | zimm;
             CSRRCI: csr_wdata = csr_rdata & (~zimm);
             default: csr_wdata = 32'h0;
+        endcase 
     end
 endmodule
