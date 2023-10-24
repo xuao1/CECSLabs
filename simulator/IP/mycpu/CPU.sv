@@ -402,7 +402,7 @@ module CPU#(
         .interrupt_en       (interrupt_en),
         .exception_en       (exception_en),
         .exception_num      (exception_num)
-    )
+    );
 
 `ifdef DEBUG
     assign putchar = |wstrb_ex && (&alu_result_ex);
