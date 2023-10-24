@@ -69,6 +69,9 @@ module CPU#(
     // mtvec
     logic [31:0]    mtvec_global;
 
+    // mepc
+    logic [31:0]    mepc_global;
+
     assign inst = inst_wb;
     assign pc_cur = pc_wb;
     assign commit_if1 = rstn;
@@ -268,7 +271,9 @@ module CPU#(
         .wdata          (csr_wdata_wb), // 要写入csr的数据
         .rdata          (csr_rdata_id), // 要从csr读取的数据
         .exception_en   (exception_en),
-        .mtvec_global   (mtvec_global)
+        .mtvec_global   (mtvec_global),
+        .pc_wb          (pc_wb),
+        .mepc_global    (mepc_global)
     );
 
     /* EX-LS segreg */

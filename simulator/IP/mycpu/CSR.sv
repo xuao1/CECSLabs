@@ -10,7 +10,10 @@ module CSR(
 
     input  logic [ 0:0] exception_en,
 
-    output logic [31:0] mtvec_global
+    output logic [31:0] mtvec_global,
+
+    input  logic [31:0] pc_wb,
+    output logic [31:0] mepc_global
     // Lab4 TODO: you need to add some input or output pors to implement CSRs' special functions
 );
     import "DPI-C" function void set_csr_ptr(input logic [31:0] m1 [], input logic [31:0] m2 [], input logic [31:0] m3 [], input logic [31:0] m4 []);
@@ -66,6 +69,9 @@ module CSR(
             mepc <= 32'h0;
         end
         // Lab4 TODO: implement mepc
+        else if(exception_en) begin
+            mepc <= pc_wb;
+        end
         else if(we && (waddr == `CSR_MEPC)) begin
             mepc <= wdata;
         end
@@ -86,4 +92,5 @@ module CSR(
     end
 
     assign mtvec_global = mtvec;
+    assign mepc_global  = mepc;
 endmodule
