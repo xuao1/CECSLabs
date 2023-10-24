@@ -271,6 +271,8 @@ module CPU#(
         .wdata          (csr_wdata_wb), // 要写入csr的数据
         .rdata          (csr_rdata_id), // 要从csr读取的数据
         .exception_en   (exception_en),
+        .interrupt_en   (interrupt_en),
+        .exception_num  (exception_num),
         .mtvec_global   (mtvec_global),
         .pc_wb          (pc_wb),
         .mepc_global    (mepc_global)

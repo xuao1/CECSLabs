@@ -9,6 +9,8 @@ module CSR(
     output logic [31:0] rdata,
 
     input  logic [ 0:0] exception_en,
+    input  logic [ 0:0] interrupt_en,
+    input  logic [ 3:0] exception_num,
 
     output logic [31:0] mtvec_global,
 
@@ -25,7 +27,7 @@ module CSR(
         end
         // Lab4 TODO: implement mstatus
         else if(exception_en) begin
-            msatus <= {mstatus[31:12], mstatus[8:0], 3'b110};
+            mstatus <= {mstatus[31:12], mstatus[8:0], 3'b110};
         end
         else if(we && (waddr == `CSR_MSTATUS)) begin
             // mstatus <= wdata;
