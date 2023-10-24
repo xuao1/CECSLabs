@@ -170,7 +170,7 @@ module CPU#(
         .alu_rs2_sel_ex (alu_rs2_sel_ex),
         .rf_we_ex       (rf_we_ex),
         .commit_id      (commit_id),
-        .commit_ex      (commit_ex)
+        .commit_ex      (commit_ex),
         .csr_rdata_id   (csr_rdata_id),
         .csr_rdata_ex   (csr_rdata_ex)
     );
@@ -245,7 +245,7 @@ module CPU#(
         .raddr          (inst_id[31:20]),
         .waddr          (inst_ex[31:20]),
         .we             ((inst_ex[6:0]==7'h73)),
-        .wdata          (csr_wdata_ex) // 要写入csr的数据
+        .wdata          (csr_wdata_ex), // 要写入csr的数据
         .rdata          (csr_rdata_id) // 要从csr读取的数据
     );
 
