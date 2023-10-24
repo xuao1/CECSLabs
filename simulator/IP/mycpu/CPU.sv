@@ -232,8 +232,8 @@ module CPU#(
 
     Priv Priv_inst (
         .csr_op         (inst_ex[14:12]),
-        .csr_rdate      (csr_rdata_ex), // 要从csr读取的数据
-        .rf_rdate1      (rf_rdata1_ex),
+        .csr_rdata      (csr_rdata_ex), // 要从csr读取的数据
+        .rf_rdata1      (rf_rdata1_ex),
         .zimm           (imm_ex),
         .csr_wdata      (csr_wdata_ex) // 要写入csr的数据
     );
