@@ -367,7 +367,7 @@ module CPU#(
         .LS_WB_stall        (LS_WB_stall),
         .pc_set_target      (pc_target),
 
-        .csr_instr_ex       (inst_ex[31:20]==7'h73),
+        .csr_instr_ex       (inst_ex[6:0]==7'h73),
         .pc_ex              (pc_ex)
     ); 
 `ifdef DEBUG
