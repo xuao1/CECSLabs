@@ -201,7 +201,9 @@ module CPU#(
         .csr_rdata_id   (csr_rdata_id),
         .csr_rdata_ex   (csr_rdata_ex),
         .ecall_signal_id (ecall_signal_id),
-        .ecall_signal_ex (ecall_signal_ex)
+        .ecall_signal_ex (ecall_signal_ex),
+        .mret_signal_id (mret_signal_id),
+        .mret_signal_ex (mret_signal_ex)
     );
 
     /* EX stage */
