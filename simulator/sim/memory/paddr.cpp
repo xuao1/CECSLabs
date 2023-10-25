@@ -82,14 +82,15 @@ void pmem_read(){
         rcount++;
         if(rcount == arlen + 1){
           dut->rlast = 1;
+          rstate = 0;
         }
       }
-      else{
-        dut->rvalid = 0;
-        dut->rlast = 0;
-        dut->arready = 0;
-        rstate = 0;
-      }
+      // else{
+      //   dut->rvalid = 0;
+      //   dut->rlast = 0;
+      //   dut->arready = 0;
+      //   rstate = 0;
+      // }
     }
   }
 }
