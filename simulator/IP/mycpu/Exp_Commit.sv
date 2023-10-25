@@ -1,17 +1,13 @@
+`timescale 1ns/1ps
 `include "./include/config.sv"
-
-// Lab4 TODO: implement the Exp_Commit module for ecall instruction
-// you need to generate exception code for `syscall from machine mode`
 module Exp_Commit(
-    // input  logic [ 0:0] clk,
-    input  logic [ 0:0] ecall_signal,
-    output logic [ 0:0] interrupt_en,
-    output logic [ 0:0] exception_en,
-    output logic [ 3:0] exception_num
+    input  logic [ 4:0] priv_vec,
+    output logic [31:0] exp_code
 );
-    // Lab4 TODO: implement the Exp_Commit module for ecall instruction
-    // you need to generate exception code for `syscall from machine mode`
-    assign interrupt_en = 1'b0;
-    assign exception_en = ecall_signal;
-    assign exception_num = 4'hb;
+    always_comb begin
+        exp_code = 0;
+        if(priv_vec[`ECALL]) begin
+            exp_code = 32'hb;
+        end
+    end
 endmodule
