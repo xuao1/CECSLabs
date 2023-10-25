@@ -95,6 +95,10 @@ void single_cycle() {
   dut->eval();
   // 将 dut->clk 的值置为 0，执行一次 dut->eval()，产生时钟的下降沿。
   dut->clk = 0;
+#ifdef AXI
+  pmem_write();
+  pmem_read();
+#endif
   dut->eval();
   // m_trace->dump(sim_time++); 
   if(dut->commit_wb == 1) {
