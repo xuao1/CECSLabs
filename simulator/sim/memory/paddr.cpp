@@ -69,7 +69,7 @@ void pmem_read(){
   else if(rstate == 1) {
     // Lab5 TODO: implement the read 
     dut->arready = 0;
-    if(rcount == 0 || dur->rready == 1){
+    if(rcount == 0 || dut->rready == 1){
       if(!dut->rlast){
         uint32_t byte_addr = araddr + rcount * arsize;
         if(in_pmem(araddr)){
