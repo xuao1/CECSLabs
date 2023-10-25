@@ -1,6 +1,6 @@
 ARGS ?= 
 
-APP ?= wanshu
+APP ?= recursion
 APP_IMG = $(addprefix $(TEST_DIR)/functest/, $(addsuffix -riscv32.bin, $(APP)))
 IMG ?= $(APP_IMG)
 
