@@ -218,7 +218,7 @@ module axi_arbiter(
         D_B: begin
             // TODO
             d_bvalid = bvalid;
-            bready = d_bready
+            bready = d_bready;
         end
         default:;
         endcase
