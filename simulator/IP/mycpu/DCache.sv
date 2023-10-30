@@ -140,7 +140,7 @@ module DCache #(
 
 /* -------------- 1 request buffer : lock the read request addr -------------- */
     // Lab6 TODO: generate uncache signal
-    logic [0:0] uncached;
+    assign uncached = (addr_pipe[31:28] == 4'b1010);
 
     always_ff @(posedge clk) begin
         if(!rstn) begin
@@ -153,7 +153,6 @@ module DCache #(
             we_pipe             <= 0;
             rvalid_pipe         <= 0;
             wvalid_pipe         <= 0;
-            uncached            <= 0;
         end
         else if(req_buf_we) begin
             addr_pipe           <= addr;
@@ -165,8 +164,6 @@ module DCache #(
             we_pipe             <= |wstrb;
             rvalid_pipe         <= rvalid;
             wvalid_pipe         <= wvalid;
-            // 所有非可缓存的外设地址最高 4 位都是 0xA
-            uncached            <= (addr_pipe[31:28] == 4'hA);
         end
     end
 
