@@ -1,7 +1,7 @@
 ARGS ?= 
 
-APP ?= recursion
-APP_IMG = $(addprefix $(TEST_DIR)/functest/, $(addsuffix -riscv32.bin, $(APP)))
+APP ?= hello
+APP_IMG = $(addprefix $(TEST_DIR)/testcases/, $(addsuffix -riscv32.bin, $(APP)))
 IMG ?= $(APP_IMG)
 
 
