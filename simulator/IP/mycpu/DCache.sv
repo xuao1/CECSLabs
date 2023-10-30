@@ -353,7 +353,7 @@ module DCache #(
         else if(mbuf_we) begin
             // Lab6 TODO: generate maddr_buf for uncache here
             if(uncached == 1) begin
-                maddr_buf <= addr_pipe;
+                maddr_buf <= {addr_pipe[31:2], 2'b0};
             end
             else begin
                 maddr_buf <= {
