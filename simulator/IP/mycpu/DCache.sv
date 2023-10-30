@@ -288,7 +288,7 @@ module DCache #(
     wire [BIT_NUM-1:0] rdata_mem, rdata_ret;
     assign rdata_mem    = mem_rdata[hit_way] >> {addr_pipe[BYTE_OFFSET_WIDTH-1:2], 5'b0};
     // Lab6 TODO: generate rdata_ret for uncache
-    assign rdata_ret    = uncached == 1 ? ret_buf[BIT_NUM-1:BIT_NUM-32] : ret_buf >> {addr_pipe[BYTE_OFFSET_WIDTH-1:2], 5'b0};
+    assign rdata_ret    = uncached == 1 ? {ret_buf[BIT_NUM-1:BIT_NUM-32], 96'b0} : ret_buf >> {addr_pipe[BYTE_OFFSET_WIDTH-1:2], 5'b0};
     assign rdata        = data_from_mem ? rdata_mem[31:0] : rdata_ret[31:0];
 
 /* -------------- 9 LRU replace: choose the way to replace -------------- */
@@ -355,7 +355,7 @@ module DCache #(
         else if(mbuf_we) begin
             // Lab6 TODO: generate maddr_buf for uncache here
             if(uncached == 1) begin
-                maddr_buf <= addr_pipe & ~4'hF;
+                maddr_buf <= addr_pipe & ~32'hF;
             end
             else begin
                 maddr_buf <= {
