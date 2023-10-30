@@ -166,7 +166,7 @@ module DCache #(
             rvalid_pipe         <= rvalid;
             wvalid_pipe         <= wvalid;
             // 所有非可缓存的外设地址最高 4 位都是 0xA
-            uncached            <= (addr[31:28] == 4'hA);
+            uncached            <= (addr_pipe[31:28] == 4'hA);
         end
     end
 
