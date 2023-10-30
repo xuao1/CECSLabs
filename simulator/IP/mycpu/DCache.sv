@@ -140,6 +140,7 @@ module DCache #(
 
 /* -------------- 1 request buffer : lock the read request addr -------------- */
     // Lab6 TODO: generate uncache signal
+    logic uncached;
     assign uncached = (addr_pipe[31:28] == 4'b1010);
 
     always_ff @(posedge clk) begin
