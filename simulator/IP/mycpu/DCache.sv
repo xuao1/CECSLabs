@@ -590,7 +590,7 @@ module DCache #(
         INIT: begin
             if(wfsm_en) begin
                 // Lab6 TODO: generate wfsm_next_state for uncache here
-                if(uncached && rvalid_pipe) begin
+                if(uncached && rvalid_pipe && ~wvalid_pipe) begin
                     wfsm_next_state = FINISH;
                 end
                 else begin
