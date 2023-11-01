@@ -24,8 +24,8 @@ Context* __irq_handle(Context *c) {
 
     case ECALL_FROM_M: {
       switch(c->gpr[17]){
-        case EVENT_SYSCALL : {
-          ev.event = EVENT_SYSCALL;
+        case 1 : {
+          ev.event = 1;
           ev.cause = c->gpr[17];
           ev.ref = c->gpr[10];
         } break;
