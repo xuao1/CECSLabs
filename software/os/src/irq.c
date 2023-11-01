@@ -3,6 +3,17 @@
 #define ECALL_FROM_M 0xb
 #define SYSCALL_YIELD 0xffffffff
 
+typedef struct {
+  enum {
+    EVENT_NULL = 0,
+    EVENT_YIELD, EVENT_SYSCALL, EVENT_PAGEFAULT, 
+    EVENT_IRQ_TIMER, EVENT_IRQ_IODEV,
+    EVENT_ERROR,
+  } event;
+  uintptr_t cause, ref;
+  const char *msg;
+} Event;
+
 void syscall_handle(Context *c);
 static Context* __event_handle(Event e, Context* c);
 
@@ -15,9 +26,13 @@ Context* __irq_handle(Context *c) {
       switch(c->gpr[17]){
         case EVENT_SYSCALL : {
           ev.event = EVENT_SYSCALL;
+          ev.cause = c->gpr[17];
+          ev.ref = c->gpr[10];
         } break;
         case EVENT_YIELD : {
           ev.event = EVENT_YIELD;
+          ev.cause = c->gpr[17];
+          ev.ref = c->gpr[10];
         } break;
       } break;
     }
