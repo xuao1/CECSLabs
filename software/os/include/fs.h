@@ -13,17 +13,4 @@ size_t fs_lseek(int fd, size_t offset, int whence);
 int fs_close(int fd);
 #endif
 
-typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
-typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
-
-typedef struct {
-  char *  name;
-  size_t  size;
-  size_t  disk_offset;
-  bool    is_open;
-  ReadFn  read;
-  WriteFn write;
-  size_t  open_offset;
-} Finfo;
-
-extern Finfo file_table[];
+uint64_t get_file_offset(const char *filename);

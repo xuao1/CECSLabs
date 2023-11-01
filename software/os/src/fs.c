@@ -5,10 +5,20 @@
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
+typedef struct {
+  char *  name;
+  size_t  size;
+  size_t  disk_offset;
+  bool    is_open;
+  ReadFn  read;
+  WriteFn write;
+  size_t  open_offset;
+} Finfo;
+
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_EVENTS, FD_FB, FD_DISPINFO};
 
 /* This is the information about all files in disk. */
-Finfo file_table[] __attribute__((used)) = {
+static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]    = {"stdin",           0, 0, 0, invalid_read,  invalid_write},
   [FD_STDOUT]   = {"stdout",          0, 0, 0, invalid_read,  invalid_write},
   [FD_STDERR]   = {"stderr",          0, 0, 0, invalid_read,  invalid_write},
@@ -54,4 +64,13 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
 int fs_close(int fd){
   // Lab7 TODO: close the file with fd
   return -1;
+}
+
+uint64_t get_file_offset(const char *filename){
+  for (int i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++) {
+      if (strcmp(file_table[i].name, filename) == 0) {
+          return file_table[i].disk_offset;
+      }
+  }
+  return uint64_t(-1);
 }

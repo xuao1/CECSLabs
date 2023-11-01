@@ -11,13 +11,8 @@ static uintptr_t elf_load(const char *filename) {
     // Lab7 TODO: implement the loader
     // Part 1
     Elf_Ehdr elf_h;
-    int file_offset = (size_t)(-1);
-    for (int i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++) {
-        if (strcmp(file_table[i].name, filename) == 0) {
-            file_offset = file_table[i].disk_offset;
-            break;
-        }
-    }
+    uint64_t file_offset = get_file_offset(filename);
+    
     ramdisk_read(&elf_h, file_offset, sizeof(Elf_Ehdr));
     // 使用 assert 来判断 elf_h.e_ident 是否为 0x464C457F；
     assert(elf_h.e_ident[0] == 0x7F && strcmp((char *)(elf_h.e_ident + 1), "ELF") == 0);
