@@ -1,0 +1,27 @@
+/home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/build/riscv32/repo/src/int_util.o: \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/repo/src/int_util.c \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/repo/src/int_lib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/limits.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/newlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/cdefs.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/_default_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/features.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_newlib_version.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/syslimits.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/stdint.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_intsup.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_stdint.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/repo/src/int_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/repo/src/int_endianness.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/compiler-rt/repo/src/int_util.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/stdlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/ieeefp.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_ansi.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/config.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/reent.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_ansi.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/lock.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/stdlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/alloca.h

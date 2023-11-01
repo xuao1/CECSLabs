@@ -1,0 +1,22 @@
+/home/xxa/Desktop/CECSLabs/software/os-app/libs/libos/build/riscv32/src/crt0/crt0.o: \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libos/src/crt0/crt0.c \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/stdint.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/_default_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/features.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_newlib_version.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_intsup.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_stdint.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/stdlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/ieeefp.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_ansi.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/newlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/config.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/reent.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/_ansi.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/_types.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/lock.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/sys/cdefs.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/machine/stdlib.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/alloca.h \
+ /home/xxa/Desktop/CECSLabs/software/os-app/libs/libc/include/assert.h
