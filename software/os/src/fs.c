@@ -72,5 +72,5 @@ uint64_t get_file_offset(const char *filename){
           return file_table[i].disk_offset;
       }
   }
-  return uint64_t(-1);
+  return (uint64_t) -1;
 }
