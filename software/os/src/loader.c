@@ -12,10 +12,13 @@ static uintptr_t elf_load(const char *filename) {
     // Part 1
     Elf_Ehdr elf_h;
     uint64_t file_offset = get_file_offset(filename);
-    
+
     ramdisk_read(&elf_h, file_offset, sizeof(Elf_Ehdr));
     // 使用 assert 来判断 elf_h.e_ident 是否为 0x464C457F；
-    assert(elf_h.e_ident[0] == 0x7F && strcmp((char *)(elf_h.e_ident + 1), "ELF") == 0);
+    assert(elf_h.e_ident[0] == 0x7F);
+    assert(elf_h.e_ident[1] == 'E');
+    assert(elf_h.e_ident[2] == 'L');
+    assert(elf_h.e_ident[3] == 'F');
     assert(elf_h.e_machine == EM_RISCV);
 
     // Part 2
