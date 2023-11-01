@@ -22,10 +22,10 @@ Context* __irq_handle(Context *c) {
   switch (c->mcause) {
     // Lab7 TODO: implement EVENT_SYSCALL and EVENT_YIELD
 
-    case ECALL_FROM_M: {
+    case SYSCALL_YIELD: {
       switch(c->gpr[17]){
-        case 1 : {
-          ev.event = 1;
+        case EVENT_SYSCALL : {
+          ev.event = EVENT_SYSCALL;
           ev.cause = c->gpr[17];
           ev.ref = c->gpr[10];
         } break;
