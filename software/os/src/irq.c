@@ -19,9 +19,10 @@ static Context* __event_handle(Event e, Context* c);
 
 Context* __irq_handle(Context *c) {
   Event ev = {0};
+  ev.event = EVENT_YIELD;
   switch (c->mcause) {
     // Lab7 TODO: implement EVENT_SYSCALL and EVENT_YIELD
-    ev.event = EVENT_YIELD;
+    
     case ECALL_FROM_M: {
       switch(c->gpr[17]){
         case EVENT_SYSCALL : {
