@@ -10,7 +10,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 
 
 
-Context* schedule(Context *prev) {};
+// Context* schedule(Context *prev) {};
 
 
 void init_proc() {
