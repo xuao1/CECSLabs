@@ -19,10 +19,9 @@ static Context* __event_handle(Event e, Context* c);
 
 Context* __irq_handle(Context *c) {
   Event ev = {0};
-  ev.event = EVENT_YIELD;
   switch (c->mcause) {
     // Lab7 TODO: implement EVENT_SYSCALL and EVENT_YIELD
-    
+
     case ECALL_FROM_M: {
       switch(c->gpr[17]){
         case EVENT_SYSCALL : {
@@ -50,10 +49,12 @@ static Context* __event_handle(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
       c->mepc += 4;
+      Log("EVENT_YIELD");
       break;
     case EVENT_SYSCALL:
       syscall_handle(c);
       c->mepc += 4;
+      Log("EVENT_SYSCALL");
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
