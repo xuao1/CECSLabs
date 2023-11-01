@@ -13,4 +13,14 @@ size_t fs_lseek(int fd, size_t offset, int whence);
 int fs_close(int fd);
 #endif
 
+typedef struct {
+  char *  name;
+  size_t  size;
+  size_t  disk_offset;
+  bool    is_open;
+  ReadFn  read;
+  WriteFn write;
+  size_t  open_offset;
+} Finfo;
+
 extern Finfo file_table[];
