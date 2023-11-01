@@ -16,7 +16,7 @@ Context* __irq_handle(Context *c) {
         case EVENT_SYSCALL : {
           ev.event = EVENT_SYSCALL;
         } break;
-        case SYSCALL_YIELD : {
+        case EVENT_YIELD : {
           ev.event = EVENT_YIELD;
         } break;
       } break;
