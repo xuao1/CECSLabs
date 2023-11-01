@@ -21,7 +21,7 @@ Context* __irq_handle(Context *c) {
   Event ev = {0};
   switch (c->mcause) {
     // Lab7 TODO: implement EVENT_SYSCALL and EVENT_YIELD
-
+    ev.event = EVENT_YIELD;
     case ECALL_FROM_M: {
       switch(c->gpr[17]){
         case EVENT_SYSCALL : {
@@ -48,7 +48,6 @@ Context* __irq_handle(Context *c) {
 static Context* __event_handle(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
-      yield();
       c->mepc += 4;
       break;
     case EVENT_SYSCALL:
