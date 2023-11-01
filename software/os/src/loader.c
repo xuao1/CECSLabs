@@ -9,6 +9,36 @@
 
 static uintptr_t elf_load(const char *filename) {
     // Lab7 TODO: implement the loader
+    // Part 1
+    Elf_Ehdr elf_h;
+    int file_offset = (size_t)(-1);
+    for (int i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++) {
+        if (strcmp(file_table[i].name, filename) == 0) {
+            file_offset = file_table[i].disk_offset;
+            break;
+        }
+    }
+    ramdisk_read(&elf_h, file_offset, sizeof(Elf_Ehdr));
+    // 使用 assert 来判断 elf_h.e_ident 是否为 0x464C457F；
+    assert(elf_h.e_ident[0] == 0x7F && strcmp(elf_h.e_ident + 1, "ELF") == 0);
+    assert(elf_h.e_machine == EM_RISCV);
+
+    // Part 2
+    Elf_Phdr elf_ph;
+    for (int i = 0; i < elf_h.e_phnum; i++) {
+        size_t ph_offset = elf_h.e_phoff + i * elf_h.e_phentsize;
+        ramdisk_read(&elf_ph, file_offset + ph_offset, sizeof(Elf_Phdr));
+
+        if (elf_ph.p_type == PT_LOAD) {
+            ramdisk_read((void *)elf_ph.p_vaddr, file_offset + elf_ph.p_offset, elf_ph.p_filesz);
+            memset((void *)(elf_ph.p_vaddr + elf_ph.p_filesz), 0, elf_ph.p_memsz - elf_ph.p_filesz);
+        }
+    }
+
+    asm volatile ("fence.i" : : : "memory");
+
+    return elf_h.e_entry;
+
 }
 
 void user_naive_load(const char *filename) {
