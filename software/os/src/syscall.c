@@ -17,7 +17,8 @@ void syscall_handle(Context *c) {
       break;
     }
     case SYS_yield: {
-      // Lab7 TODO: yield the current process
+      // Lab7 TODO: yield the current 
+      yield();
       break;
     }
     case SYS_write: {
