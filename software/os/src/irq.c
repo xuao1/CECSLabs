@@ -34,7 +34,7 @@ Context* __irq_handle(Context *c) {
           ev.cause = c->gpr[17];
           ev.ref = c->gpr[10];
         } break;
-        default: ev.event = EVENT_ERROR; break;
+        default: ev.event = c->gpr[17]; break;
       } break;
     }
 
