@@ -67,10 +67,13 @@ int fs_close(int fd){
 }
 
 uint64_t get_file_offset(const char *filename){
-  for (int i = 0; i < sizeof(file_table) / sizeof(file_table[0]); i++) {
-      if (strcmp(file_table[i].name, filename) == 0) {
-          return file_table[i].disk_offset;
-      }
+  for (int i = 0; i < sizeof(file_table) / sizeof(Finfo); i++) {
+    if (strcmp(file_table[i].name, filename) == 0) {
+      return (uint64_t)file_table[i].disk_offset;
+    }
   }
-  return (uint64_t) -1;
+  return (uint64_t) -1; 
 }
+
+
+

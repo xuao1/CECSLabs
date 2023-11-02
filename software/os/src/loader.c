@@ -33,7 +33,7 @@ static uintptr_t elf_load(const char *filename) {
         }
     }
 
-    asm volatile ("fence.i" : : : "memory");
+    asm volatile("fence.i");
 
     return elf_h.e_entry;
 
