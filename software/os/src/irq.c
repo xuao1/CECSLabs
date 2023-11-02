@@ -24,13 +24,14 @@ Context* __irq_handle(Context *c) {
 
     case ECALL_FROM_M: {
       switch(c->gpr[17]){
-        case EVENT_SYSCALL : {
-          ev.event = EVENT_SYSCALL;
-        } break;
         case EVENT_YIELD : {
           ev.event = EVENT_YIELD;
         } break;
-        default: ev.event = c->gpr[17]; break;
+        default: {
+          ev.event = EVENT_SYSCALL;
+          ev.cause = c->gpr[17];
+          ev.ref = c->gpr[10];
+        } break;
       }
     } break;
 
