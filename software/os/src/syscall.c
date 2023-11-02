@@ -19,7 +19,7 @@ void syscall_handle(Context *c) {
     }
     case SYS_yield: {
       // Lab7 TODO: yield the current 
-      // yield();
+      yield();
       break;
     }
     case SYS_write: {
