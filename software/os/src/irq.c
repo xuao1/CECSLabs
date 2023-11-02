@@ -26,17 +26,13 @@ Context* __irq_handle(Context *c) {
       switch(c->gpr[17]){
         case EVENT_SYSCALL : {
           ev.event = EVENT_SYSCALL;
-          ev.cause = c->gpr[17];
-          ev.ref = c->gpr[10];
         } break;
         case EVENT_YIELD : {
           ev.event = EVENT_YIELD;
-          ev.cause = c->gpr[17];
-          ev.ref = c->gpr[10];
         } break;
         default: ev.event = c->gpr[17]; break;
-      } break;
-    }
+      }
+    } break;
 
     default: ev.event = EVENT_ERROR; break;
   }
@@ -48,15 +44,15 @@ Context* __irq_handle(Context *c) {
 
 static Context* __event_handle(Event e, Context* c) {
   switch (e.event) {
-    // case EVENT_YIELD:
-    //   c->mepc += 4;
-    //   Log("EVENT_YIELD");
-    //   break;
-    // case EVENT_SYSCALL:
-    //   syscall_handle(c);
-    //   c->mepc += 4;
-    //   Log("EVENT_SYSCALL");
-    //   break;
+    case EVENT_YIELD:
+      c->mepc += 4;
+      Log("EVENT_YIELD");
+      break;
+    case EVENT_SYSCALL:
+      syscall_handle(c);
+      c->mepc += 4;
+      Log("EVENT_SYSCALL");
+      break;
     default: panic("Unhandled event ID = %d", e.event);
   }
 
