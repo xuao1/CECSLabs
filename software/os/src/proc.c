@@ -16,7 +16,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 void init_proc() {
   Log("Initializing processes...");
   //load program here
-  // user_naive_load("/bin/menu");
+  user_naive_load("/bin/menu");
   user_naive_load("/bin/dummy");
 }
 
