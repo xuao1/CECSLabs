@@ -14,7 +14,7 @@ void syscall_handle(Context *c) {
   switch (a[0]) {
     case SYS_exit: {
       // Lab7 TODO: exit the current process
-      // halt(0);
+      halt(0);
       break;
     }
     case SYS_yield: {
