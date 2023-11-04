@@ -18,7 +18,7 @@ void init_proc() {
   //load program here
   // user_naive_load("/bin/menu");
   // user_naive_load("/bin/dummy");
-  user_naive_load("/bin/file_test");
+  user_naive_load("/bin/file-test");
 }
 
 
