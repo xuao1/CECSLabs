@@ -38,32 +38,65 @@ void init_fs() {
 /* Open a file and return the size of file. */
 int fs_open(const char *pathname, int flags, int mode) {
   // Lab7 TODO: traverse the file_table and find the file
-  return -1;
+  int index = -1;
+  for (int i = 0; i < sizeof(file_table) / sizeof(Finfo); i++) {
+    if (strcmp(file_table[i].name, filename) == 0) {
+      index = i;
+    }
+  }
+  if (index == -1) return -1;
+  file_table[index].is_open = true;
+  file_table[index].open_offset = 0;
+  return index;
 }
 
 /* Read `len` bytes of data from the file with `fd` into `buf` */
 size_t fs_read(int fd, void *buf, size_t len) {
   // Lab7 TODO: read the file with fd from offset into buf
-  return -1;
+  if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
+  Finfo *f = &file_table[fd];
+  if(f->open_offset + len > f->size) len = f->size - f->open_offset;
+  size_t bytes_read = f->read(buf, f->disk_offset + f->open_offset, len);
+  f->open_offset += bytes_read;
+  return bytes_read;
 }
 
 
 /* Write `len` bytes of data from `buf` into the file with `fd` */
 size_t fs_write(int fd, const void *buf, size_t len) {
   // Lab7 TODO: write the file with fd from offset by buf
-  return -1;
+  if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
+  Finfo *f = &file_table[fd];
+  if(f->open_offset + len > f->size) len = f->size - f->open_offset;
+  size_t bytes_written = f->write(buf, f->disk_offset + f->open_offset, len);
+  f->open_offset += bytes_written;
+  return bytes_written;
 }
 
 /* Seek the file with `fd` from the `offset` based on `whence` */
 size_t fs_lseek(int fd, size_t offset, int whence) {
   // Lab7 TODO: seek the file with fd from the offset based on whence
-  return -1;
+  if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
+  Finfo *f = &file_table[fd];
+  size_t new_offset = f->open_offset;
+  switch (whence) {
+    case SEEK_SET: new_offset = offset; break;
+    case SEEK_CUR: new_offset += offset; break;
+    case SEEK_END: new_offset = f->size + offset; break;
+    default: return -1;
+  }
+  if(new_offset < 0 || new_offset > f->size) return -1;
+  f->open_offset = new_offset;
+  return new_offset;
 }
 
 /* Close the file with `fd` */
 int fs_close(int fd){
   // Lab7 TODO: close the file with fd
-  return -1;
+  if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
+  file_table[fd].is_open = false;
+  file_table[fd].open_offset = 0;
+  return 0;
 }
 
 uint64_t get_file_offset(const char *filename){
