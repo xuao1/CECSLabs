@@ -47,12 +47,12 @@ static Context* __event_handle(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
       c->mepc += 4;
-      // Log("EVENT_YIELD");
+      Log("EVENT_YIELD");
       break;
     case EVENT_SYSCALL:
       syscall_handle(c);
       c->mepc += 4;
-      // Log("EVENT_SYSCALL");
+      Log("EVENT_SYSCALL");
       break;
     default: panic("Unhandled event ID = %d", e.event);
   }
