@@ -146,7 +146,7 @@ $(CLEAN_ALL):
 
 ### Build fsimg and ramdisk for Nanos-lite
 APPS = nslider nterm menu bird
-TESTS = dummy file_test
+TESTS = dummy file-test
 
 fsimg: $(addprefix apps/, $(APPS)) $(addprefix tests/, $(TESTS))
 	-for t in $^; do $(MAKE) -s -C $(OS_APP_PATH)/$$t install OS_APP_PATH=$(OS_APP_PATH); done
