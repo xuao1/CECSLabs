@@ -33,6 +33,12 @@ void init_fs() {
   Log("Initializing file system...");
   DEV_GPU_CONFIG_T gpu_config = io_read(DEV_GPU_CONFIG);
   file_table[FD_FB].size = gpu_config.height * gpu_config.width * 4;
+
+  file_table[FD_STDOUT].write = serial_write;
+  file_table[FD_STDERR].write = serial_write;
+  file_table[FD_EVENTS].read = keyboard_read;
+  file_table[FD_FB].write = fb_write;
+  file_table[FD_DISPINFO].read = dispinfo_read;
 }
 
 /* Open a file and return the size of file. */
@@ -55,9 +61,20 @@ size_t fs_read(int fd, void *buf, size_t len) {
   // Lab7 TODO: read the file with fd from offset into buf
   if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
   Finfo *f = &file_table[fd];
-  if(f->open_offset + len > f->size) len = f->size - f->open_offset;
-  size_t bytes_read = f->read(buf, f->disk_offset + f->open_offset, len);
-  f->open_offset += bytes_read;
+
+  size_t bytes_read = 0;
+  if(f->read == keyboard_read){
+    bytes_read = f->read(buf, 0, len);
+  } 
+  else if(f->read == dispinfo_read){
+    bytes_read = f->read(buf, 0, len);
+  }
+  else {
+    if(f->open_offset + len > f->size) len = f->size - f->open_offset;
+    bytes_read = f->read(buf, f->disk_offset + f->open_offset, len);
+    f->open_offset += bytes_read;
+  }
+  
   return bytes_read;
 }
 
@@ -67,9 +84,20 @@ size_t fs_write(int fd, const void *buf, size_t len) {
   // Lab7 TODO: write the file with fd from offset by buf
   if(fd < 0 || fd >= sizeof(file_table) / sizeof(Finfo) || !file_table[fd].is_open) return -1;
   Finfo *f = &file_table[fd];
-  if(f->open_offset + len > f->size) len = f->size - f->open_offset;
-  size_t bytes_written = f->write(buf, f->disk_offset + f->open_offset, len);
-  f->open_offset += bytes_written;
+
+  size_t bytes_written = 0;
+  if(f->write == serial_write){
+    bytes_written = f->write(buf, 0, len);
+  }
+  else if(f->write == fb_write){
+    bytes_written = f->write(buf, 0, len);
+  }
+  else{
+    if(f->open_offset + len > f->size) len = f->size - f->open_offset;
+    bytes_written = f->write(buf, f->disk_offset + f->open_offset, len);
+    f->open_offset += bytes_written;
+  }
+
   return bytes_written;
 }
 
