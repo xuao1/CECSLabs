@@ -40,7 +40,7 @@ int fs_open(const char *pathname, int flags, int mode) {
   // Lab7 TODO: traverse the file_table and find the file
   int index = -1;
   for (int i = 0; i < sizeof(file_table) / sizeof(Finfo); i++) {
-    if (strcmp(file_table[i].name, filename) == 0) {
+    if (strcmp(file_table[i].name, pathname) == 0) {
       index = i;
     }
   }
