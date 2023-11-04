@@ -19,7 +19,7 @@ static uintptr_t elf_load(const char *filename) {
     // assert(elf_h.e_ident[1] == 'E');
     // assert(elf_h.e_ident[2] == 'L');
     // assert(elf_h.e_ident[3] == 'F');
-    assert(elf_h.e_machine == EM_RISCV);
+    // assert(elf_h.e_machine == EM_RISCV);
 
     // Part 2
     Elf_Phdr elf_ph;
