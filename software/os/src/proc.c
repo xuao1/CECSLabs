@@ -20,8 +20,8 @@ void init_proc() {
   // TESTS = dummy file-test bmp-test cpp-test event-test exec-test hello timer-test
   // user_naive_load("/bin/dummy");
   // user_naive_load("/bin/file-test");
-  user_naive_load("/bin/bmp-test");
-  // user_naive_load("/bin/cpp-test");
+  // user_naive_load("/bin/bmp-test");
+  user_naive_load("/bin/cpp-test");
   // user_naive_load("/bin/event-test");
   // user_naive_load("/bin/exec-test");
   // user_naive_load("/bin/hello");
